@@ -1,0 +1,16 @@
+{
+  "name": "ccc",
+  "description": "Colors converter",
+  "version": "0.0.1",
+  "keywords": [
+    "color",
+    "convert"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andrepolischuk/ccc.git"
+  },
+  "main": "index.js",
+  "author": "Andrey Polischuk <andre.polischuk@gmail.com>",
+  "license": "MIT"
+}

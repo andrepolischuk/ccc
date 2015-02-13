@@ -1,0 +1,15 @@
+{
+  "name": "ccc",
+  "description": "Colors converter",
+  "version": "0.0.1",
+  "keywords": [
+    "color",
+    "convert"
+  ],
+  "repository": "andrepolischuk/ccc",
+  "main" : "index.js",
+  "scripts" : [
+    "index.js"
+  ],
+  "license": "MIT"
+}
