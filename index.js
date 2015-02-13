@@ -118,10 +118,11 @@ Color.prototype.rgb = function() {
  */
 
 Color.prototype.hex = function() {
-  var ch01 = this.r.toString(16);
-  var ch23 = this.g.toString(16);
-  var ch45 = this.b.toString(16);
-  return [ch01, ch23, ch45].join('');
+  var hex = [this.r.toString(16), this.g.toString(16), this.b.toString(16)];
+  for (var i = 0; i < hex.length; i++) {
+    hex[i] += hex[i].length < 2 ? '0' : '';
+  }
+  return hex.join('');
 };
 
 /**
