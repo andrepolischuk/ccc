@@ -80,9 +80,9 @@ identify.cmyk = function(color) {
   var k = color[3];
 
   return new Color(
-    255 * (100 - +color[0]) * (100 - +k),
-    255 * (100 - +color[1]) * (100 - +k),
-    255 * (100 - +color[2]) * (100 - +k)
+    255 * (1 - +color[0]) * (1 - +k),
+    255 * (1 - +color[1]) * (1 - +k),
+    255 * (1 - +color[2]) * (1 - +k)
   );
 
 };
