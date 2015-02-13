@@ -25,7 +25,7 @@ function identify(r, g, b) {
 
 identify.rgb = function(color) {
 
-  color = color.replace(/(\s)/g, "").split(',');
+  color = color.replace(/(\s)/g, '').split(',');
 
   if (color.length !== 3) {
     return;
@@ -48,7 +48,7 @@ identify.rgb = function(color) {
 
 identify.hex = function(color) {
 
-  color = color.replace(/(#)/g, "");
+  color = color.replace(/(#)/g, '');
 
   if (color.length !== 6) {
     return;
@@ -71,7 +71,7 @@ identify.hex = function(color) {
 
 identify.cmyk = function(color) {
 
-  color = color.replace(/(\s)/g, "").split(',');
+  color = color.replace(/(\s)/g, '').split(',');
 
   if (color.length !== 4) {
     return;
@@ -146,8 +146,8 @@ Color.prototype.cmyk = function() {
  */
 
 Color.prototype.grayscale = function() {
-  this.r = this.g = this.b = Math.round(0.299 * this.r
-    + 0.587 * this.g + 0.114 * this.b);
+  this.r = this.g = this.b =
+    Math.round(0.299 * this.r + 0.587 * this.g + 0.114 * this.b);
   return this;
 };
 
