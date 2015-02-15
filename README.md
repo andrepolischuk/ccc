@@ -4,7 +4,23 @@
 
 ## Instalation
 
-  ...
+  Browser:
+
+```html
+<script src="https://cdn.rawgit.com/andrepolischuk/ccc/0.1.0/dist/ccc.min.js"></script>
+```
+
+  Component(1):
+
+```sh
+$ component install andrepolischuk/ccc
+```
+
+  Npm:
+
+```sh
+$ npm install ccc
+```
 
 ## API
 
@@ -18,7 +34,6 @@
 var white = ccc.hex('ffffff');
 ```
 
-### ccc.rgb(color).rgb()
 ### ccc.hex(color).rgb()
 ### ccc.cmyk(color).rgb()
 
