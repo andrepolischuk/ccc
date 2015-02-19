@@ -258,6 +258,20 @@ Color.prototype.invert = function() {
 };
 
 /**
+ * Average color
+ * @param  {Object} color
+ * @return {Object}
+ * @api public
+ */
+
+Color.prototype.average = function(color) {
+  this.r = Math.round((this.r + color.r) / 2);
+  this.g = Math.round((this.g + color.g) / 2);
+  this.b = Math.round((this.b + color.b) / 2);
+  return this;
+}
+
+/**
  * Module exports
  */
 
