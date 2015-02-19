@@ -78,4 +78,13 @@ describe('ager', function() {
 
   });
 
+  describe('#average', function() {
+
+    it('should return `666666`', function() {
+      ccc.rgb('51, 51, 51').average(ccc.rgb('153, 153, 153')).hex().should.equal('666666');
+      ccc.hex('333333').average(ccc.hex('999999')).hex().should.equal('666666');
+    });
+
+  });
+
 });
