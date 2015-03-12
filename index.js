@@ -2,184 +2,45 @@
 'use strict';
 
 /**
- * Color identify
- * @param  {Number} r
- * @param  {Number} g
- * @param  {Number} b
- * @return {Object}
- * @api public
+ * Parsers
  */
 
-function identify(r, g, b) {
-  if (typeof r === 'number' && arguments.length === 3) {
-    return new Color(r, g, b);
-  }
-}
+var hex = require('./lib/hex');
+var rgb = require('./lib/rgb');
+var cmyk = require('./lib/cmyk');
 
 /**
- * Parse RGB
+ * Expose parser
  * @param  {String} color
  * @return {Object}
  * @api public
  */
 
-identify.rgb = function(color) {
-
-  color = color.replace(/(\s)/g, '').split(',');
-
-  if (color.length !== 3) {
-    return;
+module.exports = function(color) {
+  switch (true) {
+    case hex.matcher.test(color):
+      return hex.apply(null, hex.matcher.exec(color).splice(1));
+    case rgb.matcher.test(color):
+      return rgb.apply(null, rgb.matcher.exec(color).splice(1));
+    case cmyk.matcher.test(color):
+      return cmyk.apply(null, cmyk.matcher.exec(color).splice(1));
   }
-
-  return new Color(
-    +color[0],
-    +color[1],
-    +color[2]
-  );
-
 };
 
 /**
- * Parse HEX
- * @param  {String} color
- * @return {Object}
- * @api public
+ * Expose hex parser
  */
 
-identify.hex = function(color) {
-
-  color = color.replace(/(#)/g, '');
-
-  if (color.length !== 6) {
-    return;
-  }
-
-  return new Color(
-    parseInt(color.substr(0, 2), 16),
-    parseInt(color.substr(2, 2), 16),
-    parseInt(color.substr(4, 2), 16)
-  );
-
-};
+module.exports.hex = hex;
 
 /**
- * Parse CMYK
- * @param  {String} color
- * @return {Object}
- * @api public
+ * Expose rgb parser
  */
 
-identify.cmyk = function(color) {
-
-  color = color.replace(/(\s)/g, '').split(',');
-
-  if (color.length !== 4) {
-    return;
-  }
-
-  var k = color[3];
-
-  return new Color(
-    255 * (1 - +color[0]) * (1 - +k),
-    255 * (1 - +color[1]) * (1 - +k),
-    255 * (1 - +color[2]) * (1 - +k)
-  );
-
-};
+module.exports.rgb = rgb;
 
 /**
- * Color
- * @param {Number} r
- * @param {Number} g
- * @param {Number} b
- * @api private
+ * Expose cmyk parser
  */
 
-function Color(r, g, b) {
-  this.r = r;
-  this.g = g;
-  this.b = b;
-}
-
-/**
- * Convert to RGB
- * @return {String}
- * @api public
- */
-
-Color.prototype.rgb = function() {
-  return [this.r, this.g, this.b].join(', ');
-};
-
-/**
- * Convert to HEX
- * @return {String}
- * @api public
- */
-
-Color.prototype.hex = function() {
-  var hex = [this.r.toString(16), this.g.toString(16), this.b.toString(16)];
-  for (var i = 0; i < hex.length; i++) {
-    hex[i] += hex[i].length < 2 ? '0' : '';
-  }
-  return hex.join('');
-};
-
-/**
- * Convert to CMYK
- * @return {String}
- * @api public
- */
-
-Color.prototype.cmyk = function() {
-  var k = 1 - (Math.max(this.r, this.g, this.b) / 255);
-  var c = (1 - (this.r / 255) - k) / (1 - k) || 0;
-  var m = (1 - (this.g / 255) - k) / (1 - k) || 0;
-  var y = (1 - (this.b / 255) - k) / (1 - k) || 0;
-  return [c, m, y, k].join(', ');
-};
-
-/**
- * To grayscale
- * @return {Object}
- * @api public
- */
-
-Color.prototype.grayscale = function() {
-  this.r = this.g = this.b =
-    Math.round(0.299 * this.r + 0.587 * this.g + 0.114 * this.b);
-  return this;
-};
-
-/**
- * Invert color
- * @return {Object}
- * @api public
- */
-
-Color.prototype.invert = function() {
-  this.r = 255 - this.r;
-  this.g = 255 - this.g;
-  this.b = 255 - this.b;
-  return this;
-};
-
-/**
- * Average color
- * @param  {Object} color
- * @return {Object}
- * @api public
- */
-
-Color.prototype.average = function(color) {
-  this.r = Math.round((this.r + color.r) / 2);
-  this.g = Math.round((this.g + color.g) / 2);
-  this.b = Math.round((this.b + color.b) / 2);
-  return this;
-}
-
-/**
- * Module exports
- */
-
-module.exports = identify;
+module.exports.cmyk = cmyk;
