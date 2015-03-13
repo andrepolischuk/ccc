@@ -6,6 +6,8 @@ describe('ccc(hex)', function() {
   it('should parse hex', function() {
     assert(typeof ccc('#fff') === 'object');
     assert(typeof ccc('#ffffff') === 'object');
+    assert(typeof ccc({hex: 'fff'}) === 'object');
+    assert(typeof ccc({hex: 'ffffff'}) === 'object');
     assert(typeof ccc.hex('fff') === 'object');
     assert(typeof ccc.hex('ffffff') === 'object');
   });
@@ -42,6 +44,8 @@ describe('ccc(rgb)', function() {
   it('should parse rgb', function() {
     assert(typeof ccc('rgb(255, 255, 255)') === 'object');
     assert(typeof ccc('rgba(255, 255, 255, .5)') === 'object');
+    assert(typeof ccc({r: 255, g: 255, b: 255}) === 'object');
+    assert(typeof ccc({r: 255, g: 255, b: 255, a: .5}) === 'object');
     assert(typeof ccc.rgb('255, 255, 255') === 'object');
     assert(typeof ccc.rgb('255, 255, 255, .5') === 'object');
     assert(typeof ccc.rgb(255, 255, 255) === 'object');
@@ -85,6 +89,7 @@ describe('ccc(rgb)', function() {
 describe('ccc(cmyk)', function() {
   it('should parse cmyk', function() {
     assert(typeof ccc('cmyk(0%, 0%, 0%, 0%)') === 'object');
+    assert(typeof ccc({c: 0, m: 0, y: 0, k: 0}) === 'object');
     assert(typeof ccc.cmyk('0, 0, 0, 0') === 'object');
     assert(typeof ccc.cmyk(0, 0, 0, 0) === 'object');
   });
