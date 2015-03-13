@@ -70,14 +70,6 @@ module.exports.rgb = rgb;
  */
 
 function rgb(r, g, b, a) {
-  if (typeof r === 'string' && !g) {
-    r = r.replace(/(\s)/g, '').split(',');
-    a = r[3];
-    b = r[2];
-    g = r[1];
-    r = r[0];
-  }
-
   return new Color(
     parseInt(r),
     parseInt(g),
@@ -109,14 +101,6 @@ module.exports.cmyk = cmyk;
  */
 
 function cmyk(c, m, y, k) {
-  if (typeof c === 'string' && !m) {
-    c = c.replace(/(\s)/g, '').split(',');
-    k = c[3];
-    y = c[2];
-    m = c[1];
-    c = c[0];
-  }
-
   return new Color(
     255 * (100 - parseInt(c)) * (100 - parseInt(k)) / 10000,
     255 * (100 - parseInt(m)) * (100 - parseInt(k)) / 10000,
