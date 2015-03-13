@@ -7,6 +7,9 @@
     "convert"
   ],
   "repository": "andrepolischuk/ccc",
+  "development": {
+    "component/assert": "^0.5.0"
+  },
   "main" : "index.js",
   "scripts" : [
     "index.js"
