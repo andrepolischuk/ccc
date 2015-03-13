@@ -32,6 +32,28 @@ describe('ccc(cmyk)', function() {
   });
 });
 
+describe('ccc(hsl)', function() {
+  it('should parse hsl', function() {
+    assert(typeof ccc('hsl(0, 0%, 100%)') === 'object');
+    assert(typeof ccc('hsla(0, 0%, 100%, .5)') === 'object');
+    assert(typeof ccc({h: 0, s: 0, l: 100}) === 'object');
+    assert(typeof ccc({h: 0, s: 0, l: 100, a: .5}) === 'object');
+    assert(typeof ccc.hsl(0, 0, 100) === 'object');
+    assert(typeof ccc.hsl(0, 0, 100, .5) === 'object');
+  });
+});
+
+describe('ccc(hsv)', function() {
+  it('should parse hsv', function() {
+    assert(typeof ccc('hsv(0, 0%, 100%)') === 'object');
+    assert(typeof ccc('hsva(0, 0%, 100%, .5)') === 'object');
+    assert(typeof ccc({h: 0, s: 0, l: 100}) === 'object');
+    assert(typeof ccc({h: 0, s: 0, l: 100, a: .5}) === 'object');
+    assert(typeof ccc.hsv(0, 0, 100) === 'object');
+    assert(typeof ccc.hsv(0, 0, 100, .5) === 'object');
+  });
+});
+
 describe('ccc(color)', function() {
   describe('#hex()', function() {
     it('should return hex object', function() {
@@ -39,12 +61,14 @@ describe('ccc(color)', function() {
       assert.deepEqual({hex: 'ffffff'}, ccc('#ffffff').hex());
       assert.deepEqual({hex: 'ffffff'}, ccc.hex('fff').hex());
       assert.deepEqual({hex: 'ffffff'}, ccc.hex('ffffff').hex());
+
       assert.deepEqual({hex: 'ffffff'}, ccc('rgb(255, 255, 255)').hex());
       assert.deepEqual({hex: 'ffffff'}, ccc('rgba(255, 255, 255, .5)').hex());
       assert.deepEqual({hex: 'ffffff'}, ccc({r: 255, g: 255, b: 255}).hex());
       assert.deepEqual({hex: 'ffffff'}, ccc({r: 255, g: 255, b: 255, a: .5}).hex());
       assert.deepEqual({hex: 'ffffff'}, ccc.rgb(255, 255, 255).hex());
       assert.deepEqual({hex: 'ffffff'}, ccc.rgb(255, 255, 255, .5).hex());
+
       assert.deepEqual({hex: 'ffffff'}, ccc('cmyk(0%, 0%, 0%, 0%)').hex());
       assert.deepEqual({hex: 'ffffff'}, ccc({c: 0, m: 0, y: 0, k: 0}).hex());
       assert.deepEqual({hex: 'ffffff'}, ccc.cmyk(0, 0, 0, 0).hex());
@@ -57,12 +81,14 @@ describe('ccc(color)', function() {
       assert(ccc('#ffffff').hexString() === '#ffffff');
       assert(ccc.hex('fff').hexString() === '#ffffff');
       assert(ccc.hex('ffffff').hexString() === '#ffffff');
+
       assert(ccc('rgb(255, 255, 255)').hexString() === '#ffffff');
       assert(ccc('rgba(255, 255, 255, .5)').hexString() === '#ffffff');
       assert(ccc({r: 255, g: 255, b: 255}).hexString() === '#ffffff');
       assert(ccc({r: 255, g: 255, b: 255, a: .5}).hexString() === '#ffffff');
       assert(ccc.rgb(255, 255, 255).hexString() === '#ffffff');
       assert(ccc.rgb(255, 255, 255, .5).hexString() === '#ffffff');
+
       assert(ccc('cmyk(0%, 0%, 0%, 0%)').hexString() === '#ffffff');
       assert(ccc({c: 0, m: 0, y: 0, k: 0}).hexString() === '#ffffff');
       assert(ccc.cmyk(0, 0, 0, 0).hexString() === '#ffffff');
@@ -75,12 +101,14 @@ describe('ccc(color)', function() {
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc('#ffffff').rgb());
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc.hex('fff').rgb());
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc.hex('ffffff').rgb());
+
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc('rgb(255, 255, 255)').rgb());
       assert.deepEqual({r: 255, g: 255, b: 255, a: .5}, ccc('rgba(255, 255, 255, .5)').rgb());
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc({r: 255, g: 255, b: 255}).rgb());
       assert.deepEqual({r: 255, g: 255, b: 255, a: .5}, ccc({r: 255, g: 255, b: 255, a: .5}).rgb());
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc.rgb(255, 255, 255).rgb());
       assert.deepEqual({r: 255, g: 255, b: 255, a: .5}, ccc.rgb(255, 255, 255, .5).rgb());
+
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc('cmyk(0%, 0%, 0%, 0%)').rgb());
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc({c: 0, m: 0, y: 0, k: 0}).rgb());
       assert.deepEqual({r: 255, g: 255, b: 255}, ccc.cmyk(0, 0, 0, 0).rgb());
@@ -93,12 +121,14 @@ describe('ccc(color)', function() {
       assert(ccc('#ffffff').rgbString() === 'rgb(255, 255, 255)');
       assert(ccc.hex('fff').rgbString() === 'rgb(255, 255, 255)');
       assert(ccc.hex('ffffff').rgbString() === 'rgb(255, 255, 255)');
+
       assert(ccc('rgb(255, 255, 255)').rgbString() === 'rgb(255, 255, 255)');
       assert(ccc('rgba(255, 255, 255, .5)').rgbString() === 'rgba(255, 255, 255, 0.5)');
       assert(ccc({r: 255, g: 255, b: 255}).rgbString() === 'rgb(255, 255, 255)');
       assert(ccc({r: 255, g: 255, b: 255, a: .5}).rgbString() === 'rgba(255, 255, 255, 0.5)');
       assert(ccc.rgb(255, 255, 255).rgbString() === 'rgb(255, 255, 255)');
       assert(ccc.rgb(255, 255, 255, .5).rgbString() === 'rgba(255, 255, 255, 0.5)');
+
       assert(ccc('cmyk(0%, 0%, 0%, 0%)').rgbString() === 'rgb(255, 255, 255)');
       assert(ccc({c: 0, m: 0, y: 0, k: 0}).rgbString() === 'rgb(255, 255, 255)');
       assert(ccc.cmyk(0, 0, 0, 0).rgbString() === 'rgb(255, 255, 255)');
@@ -111,12 +141,14 @@ describe('ccc(color)', function() {
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc('#ffffff').cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc.hex('fff').cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc.hex('ffffff').cmyk());
+
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc('rgb(255, 255, 255)').cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc('rgba(255, 255, 255, .5)').cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc({r: 255, g: 255, b: 255}).cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc({r: 255, g: 255, b: 255, a: .5}).cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc.rgb(255, 255, 255).cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc.rgb(255, 255, 255, .5).cmyk());
+
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc('cmyk(0%, 0%, 0%, 0%)').cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc({c: 0, m: 0, y: 0, k: 0}).cmyk());
       assert.deepEqual({c: 0, m: 0, y: 0, k: 0}, ccc.cmyk(0, 0, 0, 0).cmyk());
@@ -129,12 +161,14 @@ describe('ccc(color)', function() {
       assert(ccc('#ffffff').cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc.hex('fff').cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc.hex('ffffff').cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
+
       assert(ccc('rgb(255, 255, 255)').cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc('rgba(255, 255, 255, .5)').cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc({r: 255, g: 255, b: 255}).cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc({r: 255, g: 255, b: 255, a: .5}).cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc.rgb(255, 255, 255).cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc.rgb(255, 255, 255, .5).cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
+
       assert(ccc('cmyk(0%, 0%, 0%, 0%)').cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc({c: 0, m: 0, y: 0, k: 0}).cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
       assert(ccc.cmyk(0, 0, 0, 0).cmykString() === 'cmyk(0%, 0%, 0%, 0%)');
@@ -159,9 +193,9 @@ describe('ccc(color)', function() {
 
   describe('#average()', function() {
     it('should return averaged', function() {
-      assert(ccc.rgb(51, 51, 51).average(ccc.rgb(153, 153, 153)).hexString() === '#666666');
-      assert(ccc.hex('333333').average(ccc.hex('999999')).hexString() === '#666666');
-      assert(ccc.cmyk(0, 0, 0, 80).average(ccc.cmyk(0, 0, 0, 40)).hexString() === '#666666');
+      assert(ccc.rgb(51, 51, 51).average(ccc.hex('999999')).hexString() === '#666666');
+      assert(ccc.hex('333333').average(ccc.cmyk(0, 0, 0, 40)).hexString() === '#666666');
+      assert(ccc.cmyk(0, 0, 0, 80).average(ccc.rgb(153, 153, 153)).hexString() === '#666666');
     });
   });
 });

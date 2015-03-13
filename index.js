@@ -10,18 +10,31 @@
 
 module.exports = function(color) {
   switch (true) {
+    // hex
     case hex.matcher.test(color):
       return hex.apply(null, hex.matcher.exec(color).splice(1));
     case typeof color === 'object' && 'hex' in color:
       return hex(color.hex);
+    // rgb
     case rgb.matcher.test(color):
       return rgb.apply(null, rgb.matcher.exec(color).splice(1));
     case typeof color === 'object' && 'r' in color:
       return rgb(color.r, color.g, color.b, color.a);
+    // cmyk
     case cmyk.matcher.test(color):
       return cmyk.apply(null, cmyk.matcher.exec(color).splice(1));
     case typeof color === 'object' && 'c' in color:
       return cmyk(color.c, color.m, color.y, color.k);
+    // hsl
+    case hsl.matcher.test(color):
+      return hsl.apply(null, hsl.matcher.exec(color).splice(1));
+    case typeof color === 'object' && 'l' in color:
+      return hsl(color.h, color.s, color.l, color.a);
+    // hsv
+    case hsv.matcher.test(color):
+      return hsv.apply(null, hsv.matcher.exec(color).splice(1));
+    case typeof color === 'object' && 'v' in color:
+      return hsv(color.h, color.s, color.v, color.a);
   }
 };
 
@@ -45,7 +58,7 @@ function hex(str) {
     parseInt(str.substr(2, 2), 16),
     parseInt(str.substr(4, 2), 16)
   );
-};
+}
 
 /**
  * HEX matcher
@@ -74,9 +87,9 @@ function rgb(r, g, b, a) {
     parseInt(r),
     parseInt(g),
     parseInt(b),
-    parseFloat(a)
+    parseFloat(a) || a
   );
-};
+}
 
 /**
  * RGB matcher
@@ -106,13 +119,127 @@ function cmyk(c, m, y, k) {
     255 * (100 - parseInt(m)) * (100 - parseInt(k)) / 1e4,
     255 * (100 - parseInt(y)) * (100 - parseInt(k)) / 1e4
   );
-};
+}
 
 /**
  * CMYK matcher
  */
 
 cmyk.matcher = /^cmyk\(\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*\)$/;
+
+/**
+ * Expose HSL parser
+ */
+
+module.exports.hsl = hsl;
+
+/**
+ * HSL parser
+ * @param  {Number} h
+ * @param  {Number} s
+ * @param  {Number} l
+ * @param  {Number} a
+ * @return {Object}
+ * @api public
+ */
+
+function hsl(h, s, l, a) {
+  var c = (1 - Math.abs((2 * parseInt(l) / 100) - 1)) * parseInt(s) / 100;
+  var x = c * (1 - Math.abs(((parseInt(h) / 60) % 2) - 1));
+  var m = parseInt(l) / 100 - c / 2;
+  var rgb = hsxParams2rgb(h, c, x, m);
+
+  return new Color(
+    rgb[0],
+    rgb[1],
+    rgb[2],
+    parseFloat(a) || a
+  );
+}
+
+/**
+ * HSL matcher
+ */
+
+hsl.matcher = /^hsla?\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,?\s*([\d\.]+)?\s*\)?$/;
+
+/**
+ * Expose HSV parser
+ */
+
+module.exports.hsv = hsv;
+
+/**
+ * HSV parser
+ * @param  {Number} h
+ * @param  {Number} s
+ * @param  {Number} v
+ * @param  {Number} a
+ * @return {Object}
+ * @api public
+ */
+
+function hsv(h, s, v, a) {
+  var c = parseInt(v) * parseInt(s) / 1e4;
+  var x = c * (1 - Math.abs(((parseInt(h) / 60) % 2) - 1));
+  var m = parseInt(v) / 100 - c;
+  var rgb = hsxParams2rgb(h, c, x, m);
+
+  return new Color(
+    rgb[0],
+    rgb[1],
+    rgb[2],
+    parseFloat(a) || a
+  );
+}
+
+/**
+ * HSV matcher
+ */
+
+hsv.matcher = /^hsva?\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,?\s*([\d\.]+)?\s*\)?$/;
+
+/**
+ * HS* parser
+ * @param  {Number} h
+ * @param  {Number} c
+ * @param  {Number} x
+ * @param  {Number} m
+ * @return {Array}
+ * @api private
+ */
+
+function hsxParams2rgb(h, c, x, m) {
+  var rgb;
+
+  switch (true) {
+    case h >= 0 && h < 60:
+      rgb = [c, x, 0];
+      break;
+    case h >= 60 && h < 120:
+      rgb = [x, c, 0];
+      break;
+    case h >= 120 && h < 180:
+      rgb = [0, c, x];
+      break;
+    case h >= 180 && h < 240:
+      rgb = [0, x, c];
+      break;
+    case h >= 240 && h < 300:
+      rgb = [x, 0, c];
+      break;
+    case h >= 300 && h < 360:
+      rgb = [c, 0, x];
+      break;
+  }
+
+  for (var i = 0; i < rgb.length; i++) {
+    rgb[i] += m;
+    rgb[i] *= 255;
+  }
+
+  return rgb;
+}
 
 /**
  * Color
@@ -240,6 +367,142 @@ Color.prototype.cmykString = function() {
     str.join(', ')
   );
 };
+
+/**
+ * Convert to HSL object
+ * @return {Object}
+ * @api public
+ */
+
+Color.prototype.hsl = function() {
+  var params = rgb2hsxParams(
+    this.r,
+    this.g,
+    this.b
+  );
+
+  var l = (params.cMax + params.cMin) / 2;
+
+  var obj = {};
+  obj.h = params.h;
+  obj.s = params.delta === 0 ? 0 :
+    params.delta / (1 - Math.abs(2 * l - 1)) * 100;
+  obj.l = l * 100;
+
+  if (this.a) {
+    obj.a = this.a;
+  }
+
+  return obj;
+};
+
+/**
+ * Convert to HSL string
+ * @return {String}
+ * @api public
+ */
+
+Color.prototype.hslString = function() {
+  var obj = this.hsl();
+
+  var str = [
+    obj.h,
+    obj.s + '%',
+    obj.l + '%'
+  ];
+
+  if (obj.a) {
+    str.push(obj.a);
+  }
+
+  return cssString(
+    obj.a ? 'hsla' : 'hsl',
+    str.join(', ')
+  );
+};
+
+/**
+ * Convert to HSV object
+ * @return {Object}
+ * @api public
+ */
+
+Color.prototype.hsv = function() {
+  var params = rgb2hsxParams(
+    this.r,
+    this.g,
+    this.b
+  );
+
+  var obj = {};
+  obj.h = params.h;
+  obj.s = params.cMax === 0 ? 0 :
+    params.delta / params.cMax * 100;
+  obj.v = params.cMax * 100;
+
+  if (this.a) {
+    obj.a = this.a;
+  }
+
+  return obj;
+};
+
+/**
+ * Convert to HSV string
+ * @return {String}
+ * @api public
+ */
+
+Color.prototype.hsvString = function() {
+  var obj = this.hsv();
+
+  var str = [
+    obj.h,
+    obj.s + '%',
+    obj.l + '%'
+  ];
+
+  if (obj.a) {
+    str.push(obj.a);
+  }
+
+  return cssString(
+    obj.a ? 'hsva' : 'hsv',
+    str.join(', ')
+  );
+};
+
+/**
+ * Calculate HS* params
+ */
+
+function rgb2hsxParams(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  var obj = {};
+  obj.cMax = Math.max(r, g, b);
+  obj.cMin = Math.min(r, g, b);
+  obj.delta = obj.cMax - obj.cMin;
+
+  switch (true) {
+    case obj.delta === 0:
+      obj.h = 0;
+      break;
+    case obj.cMax === r:
+      obj.h = 60 * (((g - b) / obj.delta) % 6);
+      break;
+    case obj.cMax === g:
+      obj.h = 60 * (((b - r) / obj.delta) + 2);
+      break;
+    case obj.cMax === b:
+      obj.h = 60 * (((r - b) / obj.delta) + 4);
+      break;
+  }
+
+  return obj;
+}
 
 /**
  * To grayscale
