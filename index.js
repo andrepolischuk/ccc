@@ -26,13 +26,13 @@ module.exports = function(color) {
 };
 
 /**
- * Expose hex parser
+ * Expose HEX parser
  */
 
 module.exports.hex = hex;
 
 /**
- * Hex parser
+ * HEX parser
  * @param  {String} str
  * @return {Object}
  * @api public
@@ -48,19 +48,19 @@ function hex(str) {
 };
 
 /**
- * Hex matcher
+ * HEX matcher
  */
 
 hex.matcher = /^#([a-f0-9]{3}([a-f0-9]{3})?)$/i;
 
 /**
- * Expose rgb parser
+ * Expose RGB parser
  */
 
 module.exports.rgb = rgb;
 
 /**
- * Rgb parser
+ * RGB parser
  * @param  {Number} r
  * @param  {Number} g
  * @param  {Number} b
@@ -79,19 +79,19 @@ function rgb(r, g, b, a) {
 };
 
 /**
- * Rgb matcher
+ * RGB matcher
  */
 
 rgb.matcher = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,?\s*([\d\.]+)?\s*\)$/;
 
 /**
- * Expose cmyk parser
+ * Expose CMYK parser
  */
 
 module.exports.cmyk = cmyk;
 
 /**
- * Cmyk parser
+ * CMYK parser
  * @param  {Number} c
  * @param  {Number} m
  * @param  {Number} y
@@ -102,14 +102,14 @@ module.exports.cmyk = cmyk;
 
 function cmyk(c, m, y, k) {
   return new Color(
-    255 * (100 - parseInt(c)) * (100 - parseInt(k)) / 10000,
-    255 * (100 - parseInt(m)) * (100 - parseInt(k)) / 10000,
-    255 * (100 - parseInt(y)) * (100 - parseInt(k)) / 10000
+    255 * (100 - parseInt(c)) * (100 - parseInt(k)) / 1e4,
+    255 * (100 - parseInt(m)) * (100 - parseInt(k)) / 1e4,
+    255 * (100 - parseInt(y)) * (100 - parseInt(k)) / 1e4
   );
 };
 
 /**
- * Cmyk matcher
+ * CMYK matcher
  */
 
 cmyk.matcher = /^cmyk\(\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*\)$/;
@@ -122,21 +122,12 @@ cmyk.matcher = /^cmyk\(\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*,\s*(\d
  * @api public
  */
 
-function Color(r, g, b) {
+function Color(r, g, b, a) {
   this.r = r;
   this.g = g;
   this.b = b;
+  this.a = a;
 }
-
-/**
- * Convert to RGB
- * @return {String}
- * @api public
- */
-
-Color.prototype.rgb = function() {
-  return [this.r, this.g, this.b].join(', ');
-};
 
 /**
  * Convert to HEX
@@ -150,6 +141,16 @@ Color.prototype.hex = function() {
     hex[i] += hex[i].length < 2 ? '0' : '';
   }
   return hex.join('');
+};
+
+/**
+ * Convert to RGB
+ * @return {String}
+ * @api public
+ */
+
+Color.prototype.rgb = function() {
+  return [this.r, this.g, this.b].join(', ');
 };
 
 /**
