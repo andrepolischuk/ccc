@@ -74,7 +74,7 @@ function rgb(r, g, b, a) {
     parseInt(r),
     parseInt(g),
     parseInt(b),
-    parseInt(a)
+    parseFloat(a)
   );
 };
 
@@ -130,41 +130,115 @@ function Color(r, g, b, a) {
 }
 
 /**
- * Convert to HEX
- * @return {String}
+ * Convert to HEX object
+ * @return {Object}
  * @api public
  */
 
 Color.prototype.hex = function() {
-  var hex = [this.r.toString(16), this.g.toString(16), this.b.toString(16)];
-  for (var i = 0; i < hex.length; i++) {
-    hex[i] += hex[i].length < 2 ? '0' : '';
+  var str = [
+    this.r.toString(16),
+    this.g.toString(16),
+    this.b.toString(16)
+  ];
+
+  for (var i = 0; i < str.length; i++) {
+    str[i] += str[i].length < 2 ? '0' : '';
   }
-  return hex.join('');
+
+  return {hex: str.join('')};
 };
 
 /**
- * Convert to RGB
+ * Convert to HEX string
  * @return {String}
+ * @api public
+ */
+
+Color.prototype.hexString = function() {
+  return '#' + this.hex().hex;
+};
+
+/**
+ * Convert to RGB object
+ * @return {Object}
  * @api public
  */
 
 Color.prototype.rgb = function() {
-  return [this.r, this.g, this.b].join(', ');
+  var obj = {};
+  obj.r = this.r;
+  obj.g = this.g;
+  obj.b = this.b;
+
+  if (this.a) {
+    obj.a = this.a;
+  }
+
+  return obj;
 };
 
 /**
- * Convert to CMYK
+ * Convert to RGB string
  * @return {String}
  * @api public
  */
 
+Color.prototype.rgbString = function() {
+  var obj = this.rgb();
+
+  var str = [
+    obj.r,
+    obj.g,
+    obj.b
+  ];
+
+  if (obj.a) {
+    str.push(obj.a);
+  }
+
+  return cssString(
+    obj.a ? 'rgba' : 'rgb',
+    str.join(', ')
+  );
+};
+
+/**
+ * Convert to CMYK object
+ * @return {Object}
+ * @api public
+ */
+
 Color.prototype.cmyk = function() {
-  var k = 1 - (Math.max(this.r, this.g, this.b) / 255);
-  var c = (1 - (this.r / 255) - k) / (1 - k) || 0;
-  var m = (1 - (this.g / 255) - k) / (1 - k) || 0;
-  var y = (1 - (this.b / 255) - k) / (1 - k) || 0;
-  return [c, m, y, k].join(', ');
+  var obj = {};
+  obj.k = 1 - (Math.max(this.r, this.g, this.b)) / 255;
+  obj.c = (1 - (this.r / 255) - obj.k) / (1 - obj.k) * 100 || 0;
+  obj.m = (1 - (this.g / 255) - obj.k) / (1 - obj.k) * 100 || 0;
+  obj.y = (1 - (this.b / 255) - obj.k) / (1 - obj.k) * 100 || 0;
+  obj.k *= 100;
+  return obj;
+};
+
+/**
+ * Convert to CMYK string
+ * @return {String}
+ * @api public
+ */
+
+Color.prototype.cmykString = function() {
+  var obj = this.cmyk();
+
+  var str = [
+    obj.c + '%',
+    obj.m + '%',
+    obj.y + '%',
+    obj.k + '%'
+  ];
+
+  return cssString(
+    'cmyk',
+    str.join(', ')
+  );
 };
 
 /**
@@ -174,8 +248,11 @@ Color.prototype.cmyk = function() {
  */
 
 Color.prototype.grayscale = function() {
-  this.r = this.g = this.b =
-    Math.round(0.299 * this.r + 0.587 * this.g + 0.114 * this.b);
+  this.r = this.g = this.b = Math.round(
+    0.299 * this.r +
+    0.587 * this.g +
+    0.114 * this.b
+  );
   return this;
 };
 
@@ -204,4 +281,16 @@ Color.prototype.average = function(color) {
   this.g = Math.round((this.g + color.g) / 2);
   this.b = Math.round((this.b + color.b) / 2);
   return this;
+};
+
+/**
+ * CSS string
+ * @param  {String} prefix
+ * @param  {String} str
+ * @return {String}
+ * @api private
+ */
+
+function cssString(prefix, str) {
+  return prefix + '(' + str + ')';
 }
