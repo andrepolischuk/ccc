@@ -6,8 +6,6 @@ describe('ccc(hex)', function() {
   it('should parse hex', function() {
     assert(typeof ccc('#fff') === 'object');
     assert(typeof ccc('#ffffff') === 'object');
-    assert(typeof ccc({hex: 'fff'}) === 'object');
-    assert(typeof ccc({hex: 'ffffff'}) === 'object');
     assert(typeof ccc.hex('fff') === 'object');
     assert(typeof ccc.hex('ffffff') === 'object');
   });

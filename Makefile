@@ -10,7 +10,7 @@ clean:
 node_modules: package.json
 	@npm install
 
-bundle: index.js
+bundle: $(wildcard i*.js lib/*.js)
 	@duo --standalone ccc --stdout index.js > ccc.js
 	@uglifyjs ccc.js --mangle --compress --output ccc.min.js
 
