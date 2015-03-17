@@ -6,14 +6,15 @@
  */
 
 try {
+  var fmt = require('fmt');
   var type = require('type');
 } catch (err) {
+  var fmt = require('util').format;
   var type = require('component-type');
 }
 
 var conversions = require('./lib/conversions');
 var models = require('./lib/models');
-var utils = require('./lib/utils');
 
 /**
  * Expose parser
@@ -32,7 +33,7 @@ module.exports = function(color, parser, matcher) {
         case matcher.test(color):
           return parser.apply(null, matcher.exec(color).splice(1));
         case type(color) === 'object' && model.charAt(model.length - 1) in color:
-          return parser.apply(null, utils.arr(color));
+          return parser.apply(null, toArray(color));
       }
     }
   }
@@ -46,8 +47,8 @@ module.exports = function(color, parser, matcher) {
 for (var m in models) {
   if (models.hasOwnProperty(m)) {
     module.exports[m] = routeIn(m);
-    Color.prototype[m] = routeOut(m, 'obj');
-    Color.prototype[m + 'String'] = routeOut(m, 'fmt');
+    Color.prototype[m] = routeOut(m);
+    Color.prototype[m + 'String'] = routeOut(m, fmt);
   }
 }
 
@@ -70,20 +71,59 @@ function routeIn(model) {
 /**
  * Output router
  * @param  {String} model
- * @param  {String} out
- * @return {Mixed}
+ * @param  {Function} fmt
+ * @return {Object|String}
  * @api public
  */
 
-function routeOut(model, out) {
+function routeOut(model, fmt) {
   return function() {
-    var arr = utils.arr(this.value);
-    var str = out === 'obj' ?
-      models[model].keys :
-      models[model].format(this.value.a);
-    return utils[out](str, model === 'rgb' ? arr :
-      conversions['rgb2' + model].apply(null, arr));
+    var arr = model === 'rgb' ?
+      toArray(this.value) :
+      conversions['rgb2' + model].apply(null, toArray(this.value));
+
+    if (fmt) {
+      arr.unshift(models[model].format(arr));
+      return fmt.apply(null, arr);
+    }
+
+    return toObject(models[model].keys, arr);
   };
+}
+
+/**
+ * Convert array to object via keys
+ * @param  {String|Array} keys
+ * @param  {Array} arr
+ * @return {Object}
+ * @api private
+ */
+
+function toObject(keys, arr) {
+  var obj = {};
+  for (var i = 0; i < keys.length; i++) {
+    if (/(string|number)/.test(type(arr[i]))) {
+      obj[type(keys) === 'string' ? keys.charAt(i) : keys[i]] = arr[i];
+    }
+  }
+  return obj;
+}
+
+/**
+ * Convert object to values array
+ * @param  {Object} obj
+ * @return {Array}
+ * @api private
+ */
+
+function toArray(obj) {
+  var arr = [];
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key) && /(string|number)/.test(type(obj[key]))) {
+      arr.push(obj[key]);
+    }
+  }
+  return arr;
 }
 
 /**
@@ -93,7 +133,7 @@ function routeOut(model, out) {
  */
 
 function Color(color) {
-  this.value = utils.obj('rgba', color);
+  this.value = toObject('rgba', color);
   this.value.a = +this.value.a;
 }
 
