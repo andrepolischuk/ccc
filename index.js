@@ -79,8 +79,8 @@ function routeIn(model) {
 function routeOut(model, fmt) {
   return function() {
     var arr = model === 'rgb' ?
-      toArray(this.value) :
-      conversions['rgb2' + model].apply(null, toArray(this.value));
+      toArray(this.vals) :
+      conversions['rgb2' + model].apply(null, toArray(this.vals));
 
     if (fmt) {
       arr.unshift(models[model].format(arr));
@@ -133,8 +133,13 @@ function toArray(obj) {
  */
 
 function Color(color) {
-  this.value = toObject('rgba', color);
-  this.value.a = +this.value.a;
+  this.vals = toObject('rgba', color);
+
+  for (var c in this.vals) {
+    if (this.vals.hasOwnProperty(c)) {
+      this.vals[c] = +this.vals[c];
+    }
+  }
 }
 
 /**
@@ -144,7 +149,7 @@ function Color(color) {
  */
 
 Color.prototype.grayscale = function() {
-  var rgb = this.value;
+  var rgb = this.vals;
   rgb.r = rgb.g = rgb.b = Math.round(
     0.299 * rgb.r +
     0.587 * rgb.g +
@@ -160,7 +165,7 @@ Color.prototype.grayscale = function() {
  */
 
 Color.prototype.invert = function() {
-  var rgb = this.value;
+  var rgb = this.vals;
   rgb.r = 255 - rgb.r;
   rgb.g = 255 - rgb.g;
   rgb.b = 255 - rgb.b;
@@ -175,9 +180,9 @@ Color.prototype.invert = function() {
  */
 
 Color.prototype.average = function(color) {
-  var rgb = this.value;
-  rgb.r = Math.round((rgb.r + color.value.r) / 2);
-  rgb.g = Math.round((rgb.g + color.value.g) / 2);
-  rgb.b = Math.round((rgb.b + color.value.b) / 2);
+  var rgb = this.vals;
+  rgb.r = Math.round((rgb.r + color.vals.r) / 2);
+  rgb.g = Math.round((rgb.g + color.vals.g) / 2);
+  rgb.b = Math.round((rgb.b + color.vals.b) / 2);
   return this;
 };
