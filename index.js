@@ -47,7 +47,8 @@ module.exports = function(color, parser, matcher) {
 for (var m in models) {
   if (models.hasOwnProperty(m)) {
     module.exports[m] = routeIn(m);
-    Color.prototype[m] = routeOut(m);
+    Color.prototype[m] = routeOut(m, 'obj');
+    Color.prototype[m + 'Array'] = routeOut(m, 'arr');
     Color.prototype[m + 'String'] = routeOut(m, fmt);
   }
 }
@@ -71,7 +72,7 @@ function routeIn(model) {
 /**
  * Output router
  * @param  {String} model
- * @param  {Function} fmt
+ * @param  {Function|String} fmt
  * @return {Object|String}
  * @api public
  */
@@ -86,12 +87,12 @@ function routeOut(model, fmt) {
       arr.pop();
     }
 
-    if (fmt) {
+    if (type(fmt) === 'function') {
       arr.unshift(models[model].format(arr));
       return fmt.apply(null, arr);
     }
 
-    return toObject(models[model].keys, arr);
+    return fmt === 'arr' ? arr : toObject(models[model].keys, arr);
   };
 }
 

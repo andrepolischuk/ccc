@@ -71,6 +71,17 @@ describe('ccc(color)', function() {
     });
   });
 
+  describe('#keyArray()', function() {
+    it('should return key array', function() {
+      assert.deepEqual(['black'], ccc('black').keyArray());
+      assert.deepEqual(['white'], ccc('#ffffff').keyArray());
+      assert.deepEqual(['red'], ccc('rgb(255, 0, 0)').keyArray());
+      assert.deepEqual(['lime'], ccc('cmyk(100%, 0%, 100%, 0%)').keyArray());
+      assert.deepEqual(['blue'], ccc('hsl(240, 100%, 50%)').keyArray());
+      assert.deepEqual(['yellow'], ccc('hsv(60, 100%, 100%)').keyArray());
+    });
+  });
+
   describe('#keyString()', function() {
     it('should return key string', function() {
       assert(ccc('black').keyString() === 'black');
@@ -90,6 +101,17 @@ describe('ccc(color)', function() {
       assert.deepEqual({hex: '00ff00'}, ccc('cmyk(100%, 0%, 100%, 0%)').hex());
       assert.deepEqual({hex: '0000ff'}, ccc('hsl(240, 100%, 50%)').hex());
       assert.deepEqual({hex: 'ffff00'}, ccc('hsv(60, 100%, 100%)').hex());
+    });
+  });
+
+  describe('#hexArray()', function() {
+    it('should return hex array', function() {
+      assert.deepEqual(['000000'], ccc('black').hexArray());
+      assert.deepEqual(['ffffff'], ccc('#ffffff').hexArray());
+      assert.deepEqual(['ff0000'], ccc('rgb(255, 0, 0)').hexArray());
+      assert.deepEqual(['00ff00'], ccc('cmyk(100%, 0%, 100%, 0%)').hexArray());
+      assert.deepEqual(['0000ff'], ccc('hsl(240, 100%, 50%)').hexArray());
+      assert.deepEqual(['ffff00'], ccc('hsv(60, 100%, 100%)').hexArray());
     });
   });
 
@@ -115,6 +137,17 @@ describe('ccc(color)', function() {
     });
   });
 
+  describe('#rgbArray()', function() {
+    it('should return rgb array', function() {
+      assert.deepEqual([0, 0, 0], ccc('black').rgbArray());
+      assert.deepEqual([255, 255, 255], ccc('#ffffff').rgbArray());
+      assert.deepEqual([255, 0, 0, 0.5], ccc('rgba(255, 0, 0, 0.5)').rgbArray());
+      assert.deepEqual([0, 255, 0], ccc('cmyk(100%, 0%, 100%, 0%)').rgbArray());
+      assert.deepEqual([0, 0, 255, 0.5], ccc('hsla(240, 100%, 50%, 0.5)').rgbArray());
+      assert.deepEqual([255, 255, 0], ccc('hsv(60, 100%, 100%)').rgbArray());
+    });
+  });
+
   describe('#rgbString()', function() {
     it('should return rgb string', function() {
       assert(ccc('black').rgbString() === 'rgb(0, 0, 0)');
@@ -134,6 +167,17 @@ describe('ccc(color)', function() {
       assert.deepEqual({c: 100, m: 0, y: 100, k: 0}, ccc('cmyk(100%, 0%, 100%, 0%)').cmyk());
       assert.deepEqual({c: 100, m: 100, y: 0, k: 0}, ccc('hsl(240, 100%, 50%)').cmyk());
       assert.deepEqual({c: 0, m: 0, y: 100, k: 0}, ccc('hsv(60, 100%, 100%)').cmyk());
+    });
+  });
+
+  describe('#cmykArray()', function() {
+    it('should return cmyk array', function() {
+      assert.deepEqual([0, 0, 0, 100], ccc('black').cmykArray());
+      assert.deepEqual([0, 0, 0, 0], ccc('#ffffff').cmykArray());
+      assert.deepEqual([0, 100, 100, 0], ccc('rgb(255, 0, 0)').cmykArray());
+      assert.deepEqual([100, 0, 100, 0], ccc('cmyk(100%, 0%, 100%, 0%)').cmykArray());
+      assert.deepEqual([100, 100, 0, 0], ccc('hsl(240, 100%, 50%)').cmykArray());
+      assert.deepEqual([0, 0, 100, 0], ccc('hsv(60, 100%, 100%)').cmykArray());
     });
   });
 
@@ -159,6 +203,17 @@ describe('ccc(color)', function() {
     });
   });
 
+  describe('#hslArray()', function() {
+    it('should return hsl array', function() {
+      assert.deepEqual([0, 0, 0], ccc('black').hslArray());
+      assert.deepEqual([0, 0, 100], ccc('#ffffff').hslArray());
+      assert.deepEqual([0, 100, 50, 0.5], ccc('rgba(255, 0, 0, 0.5)').hslArray());
+      assert.deepEqual([120, 100, 50], ccc('cmyk(100%, 0%, 100%, 0%)').hslArray());
+      assert.deepEqual([240, 100, 50, 0.5], ccc('hsla(240, 100%, 50%, 0.5)').hslArray());
+      assert.deepEqual([60, 100, 50], ccc('hsv(60, 100%, 100%)').hslArray());
+    });
+  });
+
   describe('#hslString()', function() {
     it('should return hsl string', function() {
       assert(ccc('black').hslString() === 'hsl(0, 0%, 0%)');
@@ -178,6 +233,17 @@ describe('ccc(color)', function() {
       assert.deepEqual({h: 120, s: 100, v: 100}, ccc('cmyk(100%, 0%, 100%, 0%)').hsv());
       assert.deepEqual({h: 240, s: 100, v: 100, a: 0.5}, ccc('hsla(240, 100%, 50%, 0.5)').hsv());
       assert.deepEqual({h: 60, s: 100, v: 100}, ccc('hsv(60, 100%, 100%)').hsv());
+    });
+  });
+
+  describe('#hsvArray()', function() {
+    it('should return hsv array', function() {
+      assert.deepEqual([0, 0, 0], ccc('black').hsvArray());
+      assert.deepEqual([0, 0, 100], ccc('#ffffff').hsvArray());
+      assert.deepEqual([0, 100, 100, 0.5], ccc('rgba(255, 0, 0, 0.5)').hsvArray());
+      assert.deepEqual([120, 100, 100], ccc('cmyk(100%, 0%, 100%, 0%)').hsvArray());
+      assert.deepEqual([240, 100, 100, 0.5], ccc('hsla(240, 100%, 50%, 0.5)').hsvArray());
+      assert.deepEqual([60, 100, 100], ccc('hsv(60, 100%, 100%)').hsvArray());
     });
   });
 
