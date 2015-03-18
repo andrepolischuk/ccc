@@ -82,6 +82,10 @@ function routeOut(model, fmt) {
       toArray(this.vals) :
       conversions['rgb2' + model].apply(null, toArray(this.vals));
 
+    if (arr.length > 3 && !isDefined(arr[3])) {
+      arr.pop();
+    }
+
     if (fmt) {
       arr.unshift(models[model].format(arr));
       return fmt.apply(null, arr);
@@ -102,7 +106,7 @@ function routeOut(model, fmt) {
 function toObject(keys, arr) {
   var obj = {};
   for (var i = 0; i < keys.length; i++) {
-    if (/(string|number)/.test(type(arr[i]))) {
+    if (isDefined(arr[i])) {
       obj[type(keys) === 'string' ? keys.charAt(i) : keys[i]] = arr[i];
     }
   }
@@ -119,11 +123,22 @@ function toObject(keys, arr) {
 function toArray(obj) {
   var arr = [];
   for (var key in obj) {
-    if (obj.hasOwnProperty(key) && /(string|number)/.test(type(obj[key]))) {
+    if (obj.hasOwnProperty(key) && isDefined(obj[key])) {
       arr.push(obj[key]);
     }
   }
   return arr;
+}
+
+/**
+ * Check defining
+ * @param  {Mixed} val
+ * @return {Boolean}
+ * @api private
+ */
+
+function isDefined(val) {
+  return !/(null|nan|undefined)/.test(type(val));
 }
 
 /**
