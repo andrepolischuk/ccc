@@ -2,6 +2,8 @@
 
   Colors converter
 
+  [![Build Status](https://travis-ci.org/andrepolischuk/ccc.svg?branch=master)](https://travis-ci.org/andrepolischuk/ccc)
+
 ## Instalation
 
   Browser:
