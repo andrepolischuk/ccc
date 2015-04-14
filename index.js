@@ -5,11 +5,11 @@
  * Module dependencies
  */
 
+var tpl = require('mnml-tpl');
+
 try {
-  var fmt = require('fmt');
   var type = require('type');
 } catch (err) {
-  var fmt = require('util').format;
   var type = require('component-type');
 }
 
@@ -49,7 +49,7 @@ for (var m in models) {
     module.exports[m] = routeIn(m);
     Color.prototype[m] = routeOut(m, 'obj');
     Color.prototype[m + 'Array'] = routeOut(m, 'arr');
-    Color.prototype[m + 'String'] = routeOut(m, fmt);
+    Color.prototype[m + 'String'] = routeOut(m, tpl);
   }
 }
 
@@ -72,27 +72,27 @@ function routeIn(model) {
 /**
  * Output router
  * @param  {String} model
- * @param  {Function|String} fmt
+ * @param  {Function|String} tpl
  * @return {Object|String}
  * @api public
  */
 
-function routeOut(model, fmt) {
+function routeOut(model, tpl) {
   return function() {
-    var arr = model === 'rgb' ?
-      toArray(this.vals) :
-      conversions['rgb2' + model].apply(null, toArray(this.vals));
+    var obj = this.vals;
+    var arr = toArray(obj);
+
+    if (model !== 'rgb') {
+      arr = conversions['rgb2' + model].apply(null, arr);
+      obj = toObject(models[model].keys, arr);
+    }
 
     if (arr.length > 3 && !isDefined(arr[3])) {
       arr.pop();
     }
 
-    if (type(fmt) === 'function') {
-      arr.unshift(models[model].format(arr));
-      return fmt.apply(null, arr);
-    }
-
-    return fmt === 'arr' ? arr : toObject(models[model].keys, arr);
+    if (type(tpl) === 'function') return tpl(models[model].format(arr))(obj);
+    return tpl === 'arr' ? arr : obj;
   };
 }
 
