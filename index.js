@@ -202,3 +202,148 @@ Color.prototype.average = function(color) {
   rgb.b = Math.round((rgb.b + color.vals.b) / 2);
   return this;
 };
+
+
+/**
+ * Return or set red component
+ * @api public
+ */
+
+Color.prototype.red = rgbaComponents('r');
+
+/**
+ * Return or set green component
+ * @api public
+ */
+
+Color.prototype.green = rgbaComponents('g');
+
+/**
+ * Return or set blue component
+ * @api public
+ */
+
+Color.prototype.blue = rgbaComponents('b');
+
+/**
+ * Return or set alpha component
+ * @api public
+ */
+
+Color.prototype.alpha = rgbaComponents('a');
+
+/**
+ * Return or set RGBA components
+ * @param  {String} prop
+ * @param  {Number} val
+ * @return {Number|Object}
+ * @api private
+ */
+
+function rgbaComponents(prop) {
+  return function(val) {
+    if (type(val) !== 'number') return this.vals[prop];
+    this.vals[prop] = val;
+    return this;
+  };
+}
+
+/**
+ * Return or set cyan component
+ * @api public
+ */
+
+Color.prototype.cyan = cmykComponents(0);
+
+/**
+ * Return or set magenta component
+ * @api public
+ */
+
+Color.prototype.magenta = cmykComponents(1);
+
+/**
+ * Return or set yellow component
+ * @api public
+ */
+
+Color.prototype.yellow = cmykComponents(2);
+
+/**
+ * Return or set key component
+ * @api public
+ */
+
+Color.prototype.key = cmykComponents(3);
+
+/**
+ * Return or set CMYK components
+ * @param  {Number} prop
+ * @param  {Number} val
+ * @return {Number|Object}
+ * @api private
+ */
+
+function cmykComponents(prop) {
+  return function(val) {
+    var cmyk = conversions.rgb2cmyk.apply(null, toArray(this.vals));
+    if (type(val) !== 'number') return cmyk[prop];
+    cmyk[prop] = val;
+    this.vals = toObject('rgba', conversions.cmyk2rgb.apply(null, cmyk));
+    return this;
+  };
+}
+
+/**
+ * Return or set hue component
+ * @api public
+ */
+
+Color.prototype.hue = hslComponents(0);
+
+/**
+ * Return or set saturation component
+ * @api public
+ */
+
+Color.prototype.saturation = hslComponents(1);
+
+/**
+ * Return or set lightness component
+ * @api public
+ */
+
+Color.prototype.lightness = hslComponents(2);
+
+/**
+ * Return or set HSL components
+ * @param {Number} prop
+ * @param {Number} val
+ * @return {Number|Object}
+ * @api public
+ */
+
+function hslComponents(prop) {
+  return function(val) {
+    var hsl = conversions.rgb2hsl.apply(null, toArray(this.vals));
+    if (type(val) !== 'number') return hsl[prop];
+    hsl[prop] = val;
+    this.vals = toObject('rgba', conversions.hsl2rgb.apply(null, hsl));
+    return this;
+  };
+}
+
+/**
+ * Return or set value component
+ * @param {Number} val
+ * @return {Number|Object}
+ * @api public
+ */
+
+Color.prototype.value = function(val) {
+  var hsv = conversions.rgb2hsv.apply(null, toArray(this.vals));
+  if (type(val) !== 'number') return hsv[2];
+  hsv[2] = val;
+  this.vals = toObject('rgba', conversions.hsv2rgb.apply(null, hsv));
+  return this;
+};
