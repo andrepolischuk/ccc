@@ -10,8 +10,10 @@ clean:
 node_modules: package.json
 	@npm install
 
-bundle: $(wildcard i*.js lib/*.js)
-	@duo --standalone ccc --stdout index.js > ccc.js
-	@uglifyjs ccc.js --mangle --compress --output ccc.min.js
+ccc.js: node_modules $(wildcard i*.js lib/*.js)
+	@node_modules/.bin/duo --standalone ccc --stdout index.js > $@
+
+ccc.min.js: ccc.js
+	@node_modules/.bin/uglifyjs $< --mangle --compress --output $@
 
 .PHONY: clean test

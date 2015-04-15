@@ -15,7 +15,9 @@
     "component-type": "^1.1.0"
   },
   "devDependencies": {
-    "mocha": "^2.1.0"
+    "duo": "^0.10.0",
+    "mocha": "^2.2.4",
+    "uglifyjs": "^2.4.0"
   },
   "browser": {
     "type": "component-type"
