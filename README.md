@@ -1,16 +1,8 @@
-# Ccc
+# ccc [![Build Status](https://travis-ci.org/andrepolischuk/ccc.svg?branch=master)](https://travis-ci.org/andrepolischuk/ccc)
 
   Colors converter
 
-  [![Build Status](https://travis-ci.org/andrepolischuk/ccc.svg?branch=master)](https://travis-ci.org/andrepolischuk/ccc)
-
 ## Instalation
-
-  Browser:
-
-```html
-<script src="https://cdn.rawgit.com/andrepolischuk/ccc/0.3.0/ccc.min.js"></script>
-```
 
   Component(1):
 
@@ -22,6 +14,12 @@ $ component install andrepolischuk/ccc
 
 ```sh
 $ npm install ccc
+```
+
+  Umd:
+
+```html
+<script src="https://cdn.rawgit.com/andrepolischuk/ccc/0.3.0/ccc.min.js"></script>
 ```
 
 ## API
