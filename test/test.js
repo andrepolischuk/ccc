@@ -5,7 +5,7 @@ var assert = require('assert');
 describe('ccc(name)', function() {
   it('should parse name', function() {
     assert.deepEqual({r: 0, g: 0, b: 0}, ccc('black').vals);
-    assert.deepEqual({r: 255, g: 255, b: 255}, ccc.key('white').vals);
+    assert.deepEqual({r: 255, g: 255, b: 255}, ccc.keyword('white').vals);
   });
 });
 
@@ -60,36 +60,36 @@ describe('ccc(hsv)', function() {
 });
 
 describe('ccc(color)', function() {
-  describe('#key()', function() {
-    it('should return key object', function() {
-      assert.deepEqual({key: 'black'}, ccc('black').key());
-      assert.deepEqual({key: 'white'}, ccc('#ffffff').key());
-      assert.deepEqual({key: 'red'}, ccc('rgb(255, 0, 0)').key());
-      assert.deepEqual({key: 'lime'}, ccc('cmyk(100%, 0%, 100%, 0%)').key());
-      assert.deepEqual({key: 'blue'}, ccc('hsl(240, 100%, 50%)').key());
-      assert.deepEqual({key: 'yellow'}, ccc('hsv(60, 100%, 100%)').key());
+  describe('#keyword()', function() {
+    it('should return keyword object', function() {
+      assert.deepEqual({keyword: 'black'}, ccc('black').keyword());
+      assert.deepEqual({keyword: 'white'}, ccc('#ffffff').keyword());
+      assert.deepEqual({keyword: 'red'}, ccc('rgb(255, 0, 0)').keyword());
+      assert.deepEqual({keyword: 'lime'}, ccc('cmyk(100%, 0%, 100%, 0%)').keyword());
+      assert.deepEqual({keyword: 'blue'}, ccc('hsl(240, 100%, 50%)').keyword());
+      assert.deepEqual({keyword: 'yellow'}, ccc('hsv(60, 100%, 100%)').keyword());
     });
   });
 
-  describe('#keyArray()', function() {
-    it('should return key array', function() {
-      assert.deepEqual(['black'], ccc('black').keyArray());
-      assert.deepEqual(['white'], ccc('#ffffff').keyArray());
-      assert.deepEqual(['red'], ccc('rgb(255, 0, 0)').keyArray());
-      assert.deepEqual(['lime'], ccc('cmyk(100%, 0%, 100%, 0%)').keyArray());
-      assert.deepEqual(['blue'], ccc('hsl(240, 100%, 50%)').keyArray());
-      assert.deepEqual(['yellow'], ccc('hsv(60, 100%, 100%)').keyArray());
+  describe('#keywordArray()', function() {
+    it('should return keyword array', function() {
+      assert.deepEqual(['black'], ccc('black').keywordArray());
+      assert.deepEqual(['white'], ccc('#ffffff').keywordArray());
+      assert.deepEqual(['red'], ccc('rgb(255, 0, 0)').keywordArray());
+      assert.deepEqual(['lime'], ccc('cmyk(100%, 0%, 100%, 0%)').keywordArray());
+      assert.deepEqual(['blue'], ccc('hsl(240, 100%, 50%)').keywordArray());
+      assert.deepEqual(['yellow'], ccc('hsv(60, 100%, 100%)').keywordArray());
     });
   });
 
-  describe('#keyString()', function() {
-    it('should return key string', function() {
-      assert(ccc('black').keyString() === 'black');
-      assert(ccc('#ffffff').keyString() === 'white');
-      assert(ccc('rgb(255, 0, 0)').keyString() === 'red');
-      assert(ccc('cmyk(100%, 0%, 100%, 0%)').keyString() === 'lime');
-      assert(ccc('hsl(240, 100%, 50%)').keyString() === 'blue');
-      assert(ccc('hsv(60, 100%, 100%)').keyString() === 'yellow');
+  describe('#keywordString()', function() {
+    it('should return keyword string', function() {
+      assert(ccc('black').keywordString() === 'black');
+      assert(ccc('#ffffff').keywordString() === 'white');
+      assert(ccc('rgb(255, 0, 0)').keywordString() === 'red');
+      assert(ccc('cmyk(100%, 0%, 100%, 0%)').keywordString() === 'lime');
+      assert(ccc('hsl(240, 100%, 50%)').keywordString() === 'blue');
+      assert(ccc('hsv(60, 100%, 100%)').keywordString() === 'yellow');
     });
   });
 
@@ -265,7 +265,7 @@ describe('ccc(color)', function() {
       assert(ccc('rgb(255, 0, 0)').invert().cmykString() === 'cmyk(100%, 0%, 0%, 0%)');
       assert(ccc('cmyk(100%, 0%, 100%, 0%)').invert().hslString() === 'hsl(300, 100%, 50%)');
       assert(ccc('hsl(240, 100%, 50%)').invert().hsvString() === 'hsv(60, 100%, 100%)');
-      assert(ccc('hsv(60, 100%, 100%)').invert().keyString() === 'blue');
+      assert(ccc('hsv(60, 100%, 100%)').invert().keywordString() === 'blue');
     });
   });
 
@@ -281,7 +281,7 @@ describe('ccc(color)', function() {
 
   describe('#average()', function() {
     it('should return averaged', function() {
-      assert(ccc('black').average(ccc('white')).keyString() === 'gray');
+      assert(ccc('black').average(ccc('white')).keywordString() === 'gray');
       assert(ccc('#ffffff').average(ccc('#ff0000')).hexString() === '#ff8080');
       assert(ccc('rgb(255, 0, 0)').average(ccc('rgb(0, 255, 0)')).rgbString() === 'rgb(128, 128, 0)');
       assert(ccc('cmyk(100%, 0%, 100%, 0%)').average(ccc('cmyk(100%, 100%, 0%, 0%)')).cmykString() === 'cmyk(100%, 0%, 0%, 50%)');
