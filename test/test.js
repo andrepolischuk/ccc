@@ -60,68 +60,24 @@ describe('ccc(hsv)', function() {
 });
 
 describe('Color#keyword()', function() {
-  it('should return keyword object', function() {
-    assert.deepEqual({keyword: 'black'}, ccc('black').keyword());
-    assert.deepEqual({keyword: 'white'}, ccc('#ffffff').keyword());
-    assert.deepEqual({keyword: 'red'}, ccc('rgb(255, 0, 0)').keyword());
-    assert.deepEqual({keyword: 'lime'}, ccc('cmyk(100%, 0%, 100%, 0%)').keyword());
-    assert.deepEqual({keyword: 'blue'}, ccc('hsl(240, 100%, 50%)').keyword());
-    assert.deepEqual({keyword: 'yellow'}, ccc('hsv(60, 100%, 100%)').keyword());
-  });
-});
-
-describe('Color#keywordArray()', function() {
-  it('should return keyword array', function() {
-    assert.deepEqual(['black'], ccc('black').keywordArray());
-    assert.deepEqual(['white'], ccc('#ffffff').keywordArray());
-    assert.deepEqual(['red'], ccc('rgb(255, 0, 0)').keywordArray());
-    assert.deepEqual(['lime'], ccc('cmyk(100%, 0%, 100%, 0%)').keywordArray());
-    assert.deepEqual(['blue'], ccc('hsl(240, 100%, 50%)').keywordArray());
-    assert.deepEqual(['yellow'], ccc('hsv(60, 100%, 100%)').keywordArray());
-  });
-});
-
-describe('Color#keywordString()', function() {
   it('should return keyword string', function() {
-    assert(ccc('black').keywordString() === 'black');
-    assert(ccc('#ffffff').keywordString() === 'white');
-    assert(ccc('rgb(255, 0, 0)').keywordString() === 'red');
-    assert(ccc('cmyk(100%, 0%, 100%, 0%)').keywordString() === 'lime');
-    assert(ccc('hsl(240, 100%, 50%)').keywordString() === 'blue');
-    assert(ccc('hsv(60, 100%, 100%)').keywordString() === 'yellow');
+    assert(ccc('black').keyword() === 'black');
+    assert(ccc('#ffffff').keyword() === 'white');
+    assert(ccc('rgb(255, 0, 0)').keyword() === 'red');
+    assert(ccc('cmyk(100%, 0%, 100%, 0%)').keyword() === 'lime');
+    assert(ccc('hsl(240, 100%, 50%)').keyword() === 'blue');
+    assert(ccc('hsv(60, 100%, 100%)').keyword() === 'yellow');
   });
 });
 
 describe('Color#hex()', function() {
-  it('should return hex object', function() {
-    assert.deepEqual({hex: '000000'}, ccc('black').hex());
-    assert.deepEqual({hex: 'ffffff'}, ccc('#ffffff').hex());
-    assert.deepEqual({hex: 'ff0000'}, ccc('rgb(255, 0, 0)').hex());
-    assert.deepEqual({hex: '00ff00'}, ccc('cmyk(100%, 0%, 100%, 0%)').hex());
-    assert.deepEqual({hex: '0000ff'}, ccc('hsl(240, 100%, 50%)').hex());
-    assert.deepEqual({hex: 'ffff00'}, ccc('hsv(60, 100%, 100%)').hex());
-  });
-});
-
-describe('Color#hexArray()', function() {
-  it('should return hex array', function() {
-    assert.deepEqual(['000000'], ccc('black').hexArray());
-    assert.deepEqual(['ffffff'], ccc('#ffffff').hexArray());
-    assert.deepEqual(['ff0000'], ccc('rgb(255, 0, 0)').hexArray());
-    assert.deepEqual(['00ff00'], ccc('cmyk(100%, 0%, 100%, 0%)').hexArray());
-    assert.deepEqual(['0000ff'], ccc('hsl(240, 100%, 50%)').hexArray());
-    assert.deepEqual(['ffff00'], ccc('hsv(60, 100%, 100%)').hexArray());
-  });
-});
-
-describe('Color#hexString()', function() {
   it('should return hex string', function() {
-    assert(ccc('black').hexString() === '#000000');
-    assert(ccc('#ffffff').hexString() === '#ffffff');
-    assert(ccc('rgb(255, 0, 0)').hexString() === '#ff0000');
-    assert(ccc('cmyk(100%, 0%, 100%, 0%)').hexString() === '#00ff00');
-    assert(ccc('hsl(240, 100%, 50%)').hexString() === '#0000ff');
-    assert(ccc('hsv(60, 100%, 100%)').hexString() === '#ffff00');
+    assert(ccc('black').hex() === '#000000');
+    assert(ccc('#ffffff').hex() === '#ffffff');
+    assert(ccc('rgb(255, 0, 0)').hex() === '#ff0000');
+    assert(ccc('cmyk(100%, 0%, 100%, 0%)').hex() === '#00ff00');
+    assert(ccc('hsl(240, 100%, 50%)').hex() === '#0000ff');
+    assert(ccc('hsv(60, 100%, 100%)').hex() === '#ffff00');
   });
 });
 
@@ -259,18 +215,18 @@ describe('Color#hsvString()', function() {
 
 describe('Color#invert()', function() {
   it('should return inverted', function() {
-    assert(ccc('black').invert().hexString() === '#ffffff');
+    assert(ccc('black').invert().hex() === '#ffffff');
     assert(ccc('#ffffff').invert().rgbString() === 'rgb(0, 0, 0)');
     assert(ccc('rgb(255, 0, 0)').invert().cmykString() === 'cmyk(100%, 0%, 0%, 0%)');
     assert(ccc('cmyk(100%, 0%, 100%, 0%)').invert().hslString() === 'hsl(300, 100%, 50%)');
     assert(ccc('hsl(240, 100%, 50%)').invert().hsvString() === 'hsv(60, 100%, 100%)');
-    assert(ccc('hsv(60, 100%, 100%)').invert().keywordString() === 'blue');
+    assert(ccc('hsv(60, 100%, 100%)').invert().keyword() === 'blue');
   });
 });
 
 describe('Color#grayscale()', function() {
   it('should return grayscaled', function() {
-    assert(ccc('#ff00ff').grayscale().hexString() === '#696969');
+    assert(ccc('#ff00ff').grayscale().hex() === '#696969');
     assert(ccc('rgb(255, 0, 0)').grayscale().rgbString() === 'rgb(76, 76, 76)');
     assert(ccc('cmyk(100%, 0%, 100%, 0%)').grayscale().cmykString() === 'cmyk(0%, 0%, 0%, 41%)');
     assert(ccc('hsl(240, 100%, 50%)').grayscale().hslString() === 'hsl(0, 0%, 11%)');
@@ -280,8 +236,8 @@ describe('Color#grayscale()', function() {
 
 describe('Color#average()', function() {
   it('should return averaged', function() {
-    assert(ccc('black').average(ccc('white')).keywordString() === 'gray');
-    assert(ccc('#ffffff').average(ccc('#ff0000')).hexString() === '#ff8080');
+    assert(ccc('black').average(ccc('white')).keyword() === 'gray');
+    assert(ccc('#ffffff').average(ccc('#ff0000')).hex() === '#ff8080');
     assert(ccc('rgb(255, 0, 0)').average(ccc('rgb(0, 255, 0)')).rgbString() === 'rgb(128, 128, 0)');
     assert(ccc('cmyk(100%, 0%, 100%, 0%)').average(ccc('cmyk(100%, 100%, 0%, 0%)')).cmykString() === 'cmyk(100%, 0%, 0%, 50%)');
     assert(ccc('hsl(240, 100%, 50%)').average(ccc('hsl(60, 100%, 50%)')).hslString() === 'hsl(0, 0%, 50%)');
@@ -298,7 +254,7 @@ describe('Color#red()', function() {
 
 describe('Color#red(val)', function() {
   it('should set red component', function() {
-    assert(ccc('black').red(255).keywordString() === 'red');
+    assert(ccc('black').red(255).keyword() === 'red');
   });
 });
 
@@ -311,7 +267,7 @@ describe('Color#green()', function() {
 
 describe('Color#green(val)', function() {
   it('should set green component', function() {
-    assert(ccc('black').green(255).keywordString() === 'lime');
+    assert(ccc('black').green(255).keyword() === 'lime');
   });
 });
 
@@ -324,7 +280,7 @@ describe('Color#blue()', function() {
 
 describe('Color#blue(val)', function() {
   it('should set blue component', function() {
-    assert(ccc('black').blue(255).keywordString() === 'blue');
+    assert(ccc('black').blue(255).keyword() === 'blue');
   });
 });
 
@@ -350,7 +306,7 @@ describe('Color#cyan()', function() {
 
 describe('Color#cyan(val)', function() {
   it('should set cyan component', function() {
-    assert(ccc('white').cyan(100).keywordString() === 'aqua');
+    assert(ccc('white').cyan(100).keyword() === 'aqua');
   });
 });
 
@@ -363,7 +319,7 @@ describe('Color#magenta()', function() {
 
 describe('Color#magenta(val)', function() {
   it('should set magenta component', function() {
-    assert(ccc('white').magenta(100).keywordString() === 'fuchsia');
+    assert(ccc('white').magenta(100).keyword() === 'fuchsia');
   });
 });
 
@@ -376,7 +332,7 @@ describe('Color#yellow()', function() {
 
 describe('Color#yellow(val)', function() {
   it('should set yellow component', function() {
-    assert(ccc('white').yellow(100).keywordString() === 'yellow');
+    assert(ccc('white').yellow(100).keyword() === 'yellow');
   });
 });
 
@@ -389,7 +345,7 @@ describe('Color#key()', function() {
 
 describe('Color#key(val)', function() {
   it('should set key component', function() {
-    assert(ccc('white').key(100).keywordString() === 'black');
+    assert(ccc('white').key(100).keyword() === 'black');
   });
 });
 
@@ -402,7 +358,7 @@ describe('Color#hue()', function() {
 
 describe('Color#hue(val)', function() {
   it('should set hue component', function() {
-    assert(ccc('lime').hue(240).keywordString() === 'blue');
+    assert(ccc('lime').hue(240).keyword() === 'blue');
   });
 });
 
@@ -415,7 +371,7 @@ describe('Color#saturation()', function() {
 
 describe('Color#saturation(val)', function() {
   it('should set saturation component', function() {
-    assert(ccc('gray').saturation(100).keywordString() === 'red');
+    assert(ccc('gray').saturation(100).keyword() === 'red');
   });
 });
 
@@ -428,7 +384,7 @@ describe('Color#lightness()', function() {
 
 describe('Color#lightness(val)', function() {
   it('should set lightness component', function() {
-    assert(ccc('lime').lightness(25).keywordString() === 'green');
+    assert(ccc('lime').lightness(25).keyword() === 'green');
   });
 });
 
@@ -441,6 +397,6 @@ describe('Color#value()', function() {
 
 describe('Color#value(val)', function() {
   it('should set value component', function() {
-    assert(ccc('lime').value(50).keywordString() === 'green');
+    assert(ccc('lime').value(50).keyword() === 'green');
   });
 });

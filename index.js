@@ -47,9 +47,14 @@ module.exports = function(color, parser, matcher) {
 for (var m in models) {
   if (models.hasOwnProperty(m)) {
     module.exports[m] = routeIn(m);
-    Color.prototype[m] = routeOut(m, 'obj');
-    Color.prototype[m + 'Array'] = routeOut(m, 'arr');
-    Color.prototype[m + 'String'] = routeOut(m, tpl);
+
+    if (/(hex|keyword)/.test(m)) {
+      Color.prototype[m] = routeOut(m, tpl);
+    } else {
+      Color.prototype[m] = routeOut(m, 'obj');
+      Color.prototype[m + 'Array'] = routeOut(m, 'arr');
+      Color.prototype[m + 'String'] = routeOut(m, tpl);
+    }
   }
 }
 
