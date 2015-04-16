@@ -19,7 +19,7 @@ $ npm install ccc
   Umd:
 
 ```html
-<script src="https://cdn.rawgit.com/andrepolischuk/ccc/0.3.0/ccc.min.js"></script>
+<script src="https://cdn.rawgit.com/andrepolischuk/ccc/0.4.0/ccc.js"></script>
 ```
 
 ## API

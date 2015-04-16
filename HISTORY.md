@@ -1,3 +1,15 @@
+# 0.4.0 / 2015.04.16
+
+  * Add travis
+  * Add mnml-tpl instead of fmt
+  * Add local deps instead of global
+  * Add get and set color components
+  * Add transformation functions
+  * Rename Color#key to Color#keyword
+  * Remove array and object for hex and keyword output
+  * Fix browserify support
+  * Refactor
+
 # 0.3.0 / 2015.03.18
 
   * Add parsing from object
