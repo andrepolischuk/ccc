@@ -421,8 +421,8 @@ Color.prototype.value = function(val) {
  */
 
 Color.prototype.component = function(model, prop, val) {
-  if (type(val) !== 'number') return this.getComponent(model, prop);
-  return this.setComponent(model, prop, val);
+  if (type(val) !== 'number') return this.get(model, prop);
+  return this.set(model, prop, val);
 };
 
 /**
@@ -434,7 +434,7 @@ Color.prototype.component = function(model, prop, val) {
  * @api public
  */
 
-Color.prototype.getComponent = function(model, prop) {
+Color.prototype.get = function(model, prop) {
   var color = conversions['rgb2' + model].apply(null, toArray(this.vals));
   var index = prop === 'alpha' ? 3 : model.indexOf(prop.charAt(0));
   return color[index];
@@ -450,7 +450,7 @@ Color.prototype.getComponent = function(model, prop) {
  * @api public
  */
 
-Color.prototype.setComponent = function(model, prop, val) {
+Color.prototype.set = function(model, prop, val) {
   var color = conversions['rgb2' + model].apply(null, toArray(this.vals));
   var index = prop === 'alpha' ? 3 : model.indexOf(prop.charAt(0));
   color[index] = val;
