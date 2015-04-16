@@ -8,6 +8,7 @@
   ],
   "repository": "andrepolischuk/ccc",
   "dependencies": {
+    "andrepolischuk/ea": "^0.3.2",
     "component/type": "^1.1.0",
     "rambler-digital-solutions/mnml-tpl": "master"
   },
@@ -17,8 +18,7 @@
   "main" : "index.js",
   "scripts" : [
     "index.js",
-    "lib/conversions.js",
-    "lib/models.js"
+    "lib/conversions.js"
   ],
   "license": "MIT"
 }
