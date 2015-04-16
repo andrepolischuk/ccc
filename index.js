@@ -218,6 +218,84 @@ Color.prototype.average = function(color) {
   return this;
 };
 
+/**
+ * Check light color
+ *
+ * @return {Boolean}
+ * @api public
+ */
+
+Color.prototype.light = function() {
+  return this.lightness() >= 50;
+};
+
+/**
+ * Check dark color
+ *
+ * @return {Boolean}
+ * @api public
+ */
+
+Color.prototype.dark = function() {
+  return this.lightness() < 50;
+};
+
+/**
+ * Lighten color
+ *
+ * @param {Number} val
+ * @return {Object}
+ * @api public
+ */
+
+Color.prototype.lighten = function(val) {
+  val += this.lightness();
+  this.lightness(val > 100 ? 100 : val);
+  return this;
+};
+
+/**
+ * Darken color
+ *
+ * @param {Number} val
+ * @return {Object}
+ * @api public
+ */
+
+Color.prototype.darken = function(val) {
+  val -= this.lightness();
+  this.lightness(val > 0 ? 0 : -val);
+  return this;
+};
+
+/**
+ * Saturate color
+ *
+ * @param {Number} val
+ * @return {Object}
+ * @api public
+ */
+
+Color.prototype.saturate = function(val) {
+  val += this.saturation();
+  this.saturation(val > 100 ? 100 : val);
+  return this;
+};
+
+
+/**
+ * Desaturate color
+ *
+ * @param {Number} val
+ * @return {Object}
+ * @api public
+ */
+
+Color.prototype.desaturate = function(val) {
+  val -= this.saturation();
+  this.saturation(val > 0 ? 0 : -val);
+  return this;
+};
 
 /**
  * Return or set red component
@@ -298,9 +376,6 @@ Color.prototype.lightness = colorComponents('hsl', 2);
 
 /**
  * Return or set value component
- *
- * @param {Number} val
- * @return {Number|Object}
  * @api public
  */
 

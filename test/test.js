@@ -400,3 +400,49 @@ describe('Color#value(val)', function() {
     assert(ccc('lime').value(50).keyword() === 'green');
   });
 });
+
+describe('Color#light()', function() {
+  it('should detect light color', function() {
+    assert(ccc('red').light() === true);
+    assert(ccc('darkblue').light() === false);
+    assert(ccc('#ffffff').light() === true);
+    assert(ccc('rgb(0, 0, 0)').light() === false);
+  });
+});
+
+describe('Color#dark()', function() {
+  it('should detect dark color', function() {
+    assert(ccc('purple').dark() === true);
+    assert(ccc('lime').dark() === false);
+    assert(ccc('#ffffff').dark() === false);
+    assert(ccc('rgb(0, 0, 0)').dark() === true);
+  });
+});
+
+describe('Color#lighten()', function() {
+  it('should increase color lightness', function() {
+    assert(ccc('blue').lighten(25).lightness() === 75);
+    assert(ccc('lime').lighten(50).keyword() === 'white');
+    assert(ccc('black').lighten(50).keyword() === 'gray');
+  });
+});
+
+describe('Color#darken()', function() {
+  it('should reduce color lightness', function() {
+    assert(ccc('blue').darken(25).lightness() === 25);
+    assert(ccc('red').darken(50).keyword() === 'black');
+    assert(ccc('white').darken(50).keyword() === 'gray');
+  });
+});
+
+describe('Color#saturate()', function() {
+  it('should increase color saturation', function() {
+    assert(ccc('gray').saturate(50).saturation() === 50);
+  });
+});
+
+describe('Color#desaturate()', function() {
+  it('should reduce color saturation', function() {
+    assert(ccc('red').desaturate(50).saturation() === 50);
+  });
+});
