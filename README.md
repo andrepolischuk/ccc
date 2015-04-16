@@ -26,7 +26,7 @@ $ npm install ccc
 
 ### ccc(str)
 
-  Parse color via string
+  Return [Color](#color) via string
 
 ```js
 var color = ccc('black')
@@ -41,7 +41,7 @@ var color = ccc('hsv(60, 100%, 100%)')
 
 ### ccc(obj)
 
-  Parse color via object
+  Return [Color](#color) via object
 
 ```js
 var color = ccc({r: 255, g: 0, b: 0})
@@ -53,7 +53,7 @@ var color = ccc({h: 60, s: 100, v: 100})
 
 ### ccc.rgb(...arguments)
 
-  Parse color via arguments
+  Return [Color](#color) via arguments
 
 ```js
 var color = ccc.keyword('black')
@@ -68,7 +68,7 @@ var color = ccc.hsv(60, 100, 100)
 
 ### ccc.rgb(arr)
 
-  Parse color via array and return [Color](#color)
+  Return [Color](#color) via array
 
 ```js
 var color = ccc.rgb([255, 0, 0])
@@ -208,9 +208,19 @@ ccc('#ffffff').darken(50).hex()
 
   Saturate color by `val`
 
+```js
+ccc('gray').saturate(50).saturation()
+// 50
+```
+
 #### Color#desaturate(val)
 
   Desaturate color by `val`
+
+```js
+ccc('red').desaturate(50).saturation()
+// 50
+```
 
 #### Color#red([val])
 
