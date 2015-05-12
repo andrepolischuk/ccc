@@ -8,7 +8,7 @@
   ],
   "repository": "andrepolischuk/ccc",
   "dependencies": {
-    "ea": "^0.3.2",
+    "ea": "^0.4.0",
     "mnml-tpl": "^1.0.2",
     "component-type": "^1.1.0"
   },

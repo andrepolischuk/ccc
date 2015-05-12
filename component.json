@@ -8,7 +8,7 @@
   ],
   "repository": "andrepolischuk/ccc",
   "dependencies": {
-    "andrepolischuk/ea": "^0.3.2",
+    "andrepolischuk/ea": "^0.4.0",
     "component/type": "^1.1.0",
     "rambler-digital-solutions/mnml-tpl": "master"
   },
