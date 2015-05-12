@@ -6,24 +6,22 @@
     "color",
     "convert"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/andrepolischuk/ccc.git"
-  },
+  "repository": "andrepolischuk/ccc",
   "dependencies": {
     "ea": "^0.3.2",
     "mnml-tpl": "^1.0.2",
     "component-type": "^1.1.0"
   },
   "devDependencies": {
-    "duo": "^0.10.0",
-    "mocha": "^2.2.4",
-    "uglifyjs": "^2.4.0"
+    "mocha": "^2.2.4"
   },
   "browser": {
     "type": "component-type"
   },
   "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "Andrey Polischuk <andre.polischuk@gmail.com>",
   "license": "MIT"
 }

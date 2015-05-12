@@ -12,9 +12,6 @@
     "component/type": "^1.1.0",
     "rambler-digital-solutions/mnml-tpl": "master"
   },
-  "development": {
-    "component/assert": "^0.5.0"
-  },
   "main" : "index.js",
   "scripts" : [
     "index.js",
