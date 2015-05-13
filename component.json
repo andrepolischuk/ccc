@@ -1,10 +1,11 @@
 {
   "name": "ccc",
-  "description": "Colors converter",
+  "description": "Color conversions and transformations",
   "version": "0.4.0",
   "keywords": [
     "color",
-    "convert"
+    "conversions",
+    "transformations"
   ],
   "repository": "andrepolischuk/ccc",
   "dependencies": {
@@ -13,8 +14,8 @@
     "component/type": "^1.1.0",
     "rambler-digital-solutions/mnml-tpl": "master"
   },
-  "main" : "index.js",
-  "scripts" : [
+  "main": "index.js",
+  "scripts": [
     "index.js"
   ],
   "license": "MIT"

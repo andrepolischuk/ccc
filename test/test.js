@@ -99,7 +99,6 @@ describe('Color#rgbArray()', function() {
     assert.deepEqual([0, 0, 0], ccc('black').rgbArray());
     assert.deepEqual([255, 255, 255], ccc('#ffffff').rgbArray());
     assert.deepEqual([255, 0, 0, 0.5], ccc('rgba(255, 0, 0, 0.5)').rgbArray());
-    console.log(ccc('cmyk(100%, 0%, 100%, 0%)').rgbArray());
     assert.deepEqual([0, 255, 0], ccc('cmyk(100%, 0%, 100%, 0%)').rgbArray());
     assert.deepEqual([0, 0, 255, 0.5], ccc('hsla(240, 100%, 50%, 0.5)').rgbArray());
     assert.deepEqual([255, 255, 0], ccc('hsv(60, 100%, 100%)').rgbArray());

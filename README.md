@@ -1,6 +1,6 @@
 # ccc [![Build Status](https://travis-ci.org/andrepolischuk/ccc.svg?branch=master)](https://travis-ci.org/andrepolischuk/ccc)
 
-  > Colors converter
+  > Color conversions and transformations
 
 ## Instalation
 
@@ -20,10 +20,8 @@ var color = ccc('black');
 var color = ccc('#ffffff');
 var color = ccc('rgb(255, 0, 0)');
 var color = ccc('rgba(255, 0, 0, 0.5)');
-var color = ccc('cmyk(100%, 0%, 100%, 0%)');
 var color = ccc('hsl(240, 100%, 50%)');
 var color = ccc('hsla(240, 100%, 50%, 0.7)');
-var color = ccc('hsv(60, 100%, 100%)');
 ```
 
 ### ccc(obj)
@@ -98,9 +96,7 @@ color.hsvArray(); // [60, 100, 100]
 color.keyword(); // 'black'
 color.hex(); // '#ffffff'
 color.rgbString(); // rgb(255, 0, 0)
-color.cmykString(); // cmyk(100%, 0%, 100%, 0%)
 color.hslString(); // hsl(240, 100%, 50%)
-color.hsvString(); // hsv(60, 100%, 100%)
 ```
 
 #### Color#invert()
