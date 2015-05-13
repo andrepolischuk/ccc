@@ -5,6 +5,7 @@
  * Module dependencies
  */
 
+var conversions = require('color-conversions');
 var each = require('ea');
 var tpl = require('mnml-tpl');
 
@@ -14,7 +15,6 @@ try {
   var type = require('component-type');
 }
 
-var conversions = require('./lib/conversions');
 
 /**
  * Color matchers
@@ -93,7 +93,10 @@ each(matchers, function(matcher, model) {
 function parse(model, val) {
   if (type(val) === 'array') return parse.apply(null, [model].concat(val));
   var args = [].splice.call(arguments, 1);
-  return new Color(conversions[model + '2rgb'].apply(null, args));
+  if (model === 'rgb') return new Color([+args[0], +args[1], +args[2], +args[3]]);
+  var arr = conversions[model + '2rgb'].apply(null, args);
+  if (model !== 'cmyk' && args.length > 3) arr.push(+args[3]);
+  return new Color(arr);
 }
 
 /**
@@ -161,8 +164,9 @@ function Color(color) {
  */
 
 Color.prototype.getArray = function(model) {
+  if (model === 'rgb') return toArray(this.vals);
   var arr = conversions['rgb2' + model].apply(null, toArray(this.vals));
-  if (arr.length > 3 && !isDefined(arr[3])) arr.pop();
+  if (this.vals.a) arr.push(this.vals.a);
   return arr;
 };
 
@@ -435,9 +439,13 @@ Color.prototype.component = function(model, prop, val) {
  */
 
 Color.prototype.get = function(model, prop) {
-  var color = conversions['rgb2' + model].apply(null, toArray(this.vals));
+  var arr = model === 'rgb' ?
+    toArray(this.vals) :
+    conversions['rgb2' + model].apply(null, toArray(this.vals));
+
+  if (this.vals.a && arr.length === 3) arr.push(this.vals.a);
   var index = prop === 'alpha' ? 3 : model.indexOf(prop.charAt(0));
-  return color[index];
+  return arr[index];
 };
 
 /**
@@ -451,9 +459,17 @@ Color.prototype.get = function(model, prop) {
  */
 
 Color.prototype.set = function(model, prop, val) {
-  var color = conversions['rgb2' + model].apply(null, toArray(this.vals));
+  var arr = model === 'rgb' ?
+    toArray(this.vals) :
+    conversions['rgb2' + model].apply(null, toArray(this.vals));
+
+  if (this.vals.a && arr.length === 3) arr.push(this.vals.a);
   var index = prop === 'alpha' ? 3 : model.indexOf(prop.charAt(0));
-  color[index] = val;
-  this.vals = toObject('rgba', conversions[model + '2rgb'].apply(null, color));
+  arr[index] = val;
+
+  this.vals = model === 'rgb' ?
+    toObject('rgba', arr) :
+    toObject('rgba', conversions[model + '2rgb'].apply(null, arr));
+
   return this;
 };

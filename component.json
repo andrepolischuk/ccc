@@ -9,13 +9,13 @@
   "repository": "andrepolischuk/ccc",
   "dependencies": {
     "andrepolischuk/ea": "^0.4.0",
+    "andrepolischuk/color-conversions": "^0.1.1",
     "component/type": "^1.1.0",
     "rambler-digital-solutions/mnml-tpl": "master"
   },
   "main" : "index.js",
   "scripts" : [
-    "index.js",
-    "lib/conversions.js"
+    "index.js"
   ],
   "license": "MIT"
 }
