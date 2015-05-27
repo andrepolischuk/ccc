@@ -6,6 +6,9 @@
 
 ```sh
 $ npm install --save ccc
+```
+
+```js
 $ component install andrepolischuk/ccc
 ```
 
@@ -13,7 +16,7 @@ $ component install andrepolischuk/ccc
 
 ### ccc(str)
 
-  Return [Color](#color) via string
+  Create color via string
 
 ```js
 var color = ccc('black');
@@ -26,7 +29,7 @@ var color = ccc('hsla(240, 100%, 50%, 0.7)');
 
 ### ccc(obj)
 
-  Return [Color](#color) via object
+  Create color via object
 
 ```js
 var color = ccc({r: 255, g: 0, b: 0});
@@ -38,7 +41,7 @@ var color = ccc({h: 60, s: 100, v: 100});
 
 ### ccc.rgb(...arguments)
 
-  Return [Color](#color) via arguments
+  Create color via arguments
 
 ```js
 var color = ccc.keyword('black');
@@ -53,7 +56,7 @@ var color = ccc.hsv(60, 100, 100);
 
 ### ccc.rgb(arr)
 
-  Return [Color](#color) via array
+  Create color via array
 
 ```js
 var color = ccc.rgb([255, 0, 0]);
@@ -64,9 +67,7 @@ var color = ccc.hsl([240, 100, 50, 0.7]);
 var color = ccc.hsv([60, 100, 100]);
 ```
 
-### Color
-
-#### Color#rgb()
+### .rgb()
 
   Return converted color object
 
@@ -77,7 +78,7 @@ color.hsl(); // {h: 240, s: 100, l: 50}
 color.hsv(); // {h: 60, s: 100, v: 100}
 ```
 
-#### Color#rgbArray()
+### .rgbArray()
 
   Return converted color array
 
@@ -88,7 +89,7 @@ color.hslArray(); // [240, 100, 50]
 color.hsvArray(); // [60, 100, 100]
 ```
 
-#### Color#rgbString()
+### .rgbString()
 
   Return converted color string
 
@@ -99,7 +100,7 @@ color.rgbString(); // rgb(255, 0, 0)
 color.hslString(); // hsl(240, 100%, 50%)
 ```
 
-#### Color#invert()
+### .invert()
 
   Invert color
 
@@ -107,7 +108,7 @@ color.hslString(); // hsl(240, 100%, 50%)
 ccc('#ffffff').invert().hex(); // #000000
 ```
 
-#### Color#grayscale()
+### .grayscale()
 
   Convert color to grayscale
 
@@ -115,7 +116,7 @@ ccc('#ffffff').invert().hex(); // #000000
 ccc('#669900').grayscale().hex(); // #787878
 ```
 
-#### Color#average(Color2)
+### .average(Color2)
 
   Calculate average
 
@@ -123,7 +124,7 @@ ccc('#669900').grayscale().hex(); // #787878
 ccc('#333333').average(ccc('#999999')).hex(); // #666666
 ```
 
-#### Color#light()
+### .light()
 
   Check if color is light
 
@@ -131,7 +132,7 @@ ccc('#333333').average(ccc('#999999')).hex(); // #666666
 ccc('white').light(); // true
 ```
 
-#### Color#dark()
+### .dark()
 
   Check if color is dark
 
@@ -139,7 +140,7 @@ ccc('white').light(); // true
 ccc('black').dark(); // true
 ```
 
-#### Color#lighten(val)
+### .lighten(val)
 
   Lighten color by `val`
 
@@ -147,7 +148,7 @@ ccc('black').dark(); // true
 ccc('#000000').lighten(50).hex(); // #080808
 ```
 
-#### Color#darken(val)
+### .darken(val)
 
   Darken color by `val`
 
@@ -155,7 +156,7 @@ ccc('#000000').lighten(50).hex(); // #080808
 ccc('#ffffff').darken(50).hex(); // #080808
 ```
 
-#### Color#saturate(val)
+### .saturate(val)
 
   Saturate color by `val`
 
@@ -163,7 +164,7 @@ ccc('#ffffff').darken(50).hex(); // #080808
 ccc('gray').saturate(50).saturation(); // 50
 ```
 
-#### Color#desaturate(val)
+### .desaturate(val)
 
   Desaturate color by `val`
 
@@ -171,7 +172,7 @@ ccc('gray').saturate(50).saturation(); // 50
 ccc('red').desaturate(50).saturation(); // 50
 ```
 
-#### Color#red([val])
+### .red([val])
 
   Return or set red component of RGB
 
@@ -180,7 +181,7 @@ ccc('red').red(); // 255
 ccc('black').red(255).keyword(); // red
 ```
 
-#### Color#green([val])
+### .green([val])
 
   Return or set green component of RGB
 
@@ -189,7 +190,7 @@ ccc('green').green(); // 255
 ccc('black').green(255).keyword(); // lime
 ```
 
-#### Color#blue([val])
+### .blue([val])
 
   Return or set blue component of RGB
 
@@ -198,7 +199,7 @@ ccc('blue').blue(); // 255
 ccc('black').blue(255).keyword(); // blue
 ```
 
-#### Color#alpha([val])
+### .alpha([val])
 
   Return or set alpha component
 
@@ -207,7 +208,7 @@ ccc('rgba(0, 0, 0, 0.5)').alpha(); // 0.5
 ccc('black').alpha(0.5).rgbString(); // rgba(0, 0, 0, 0.5)
 ```
 
-#### Color#cyan([val])
+### .cyan([val])
 
   Return or set cyan component of CMYK
 
@@ -216,7 +217,7 @@ ccc('aqua').cyan(); // 100
 ccc('white').cyan(100).keyword(); // aqua
 ```
 
-#### Color#magenta([val])
+### .magenta([val])
 
   Return or set magenta component of CMYK
 
@@ -225,7 +226,7 @@ ccc('fuchsia').magenta(); // 100
 ccc('white').magenta(100).keyword(); // fuchsia
 ```
 
-#### Color#yellow([val])
+### .yellow([val])
 
   Return or set yellow component of CMYK
 
@@ -234,7 +235,7 @@ ccc('yellow').cyan(); // 100
 ccc('white').cyan(100).keyword(); // yellow
 ```
 
-#### Color#key([val])
+### .key([val])
 
   Return or set key component of CMYK
 
@@ -243,7 +244,7 @@ ccc('black').key(); // 100
 ccc('white').key(100).keyword(); // black
 ```
 
-#### Color#hue([val])
+### .hue([val])
 
   Return or set hue component of HSL
 
@@ -252,7 +253,7 @@ ccc('red').hue(); // 0
 ccc('lime').hue(240).keyword(); // blue
 ```
 
-#### Color#saturation([val])
+### .saturation([val])
 
   Return or set saturation component of HSL
 
@@ -261,7 +262,7 @@ ccc('lime').saturation(); // 100
 ccc('gray').saturation(100).keyword(); // red
 ```
 
-#### Color#lightness([val])
+### .lightness([val])
 
   Return or set lightness component of HSL
 
@@ -270,7 +271,7 @@ ccc('blue').lightness(); // 50
 ccc('lime').lightness(25).keyword(); // green
 ```
 
-#### Color#value([val])
+### .value([val])
 
   Return or set value component of HSB
 
