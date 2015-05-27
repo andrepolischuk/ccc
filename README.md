@@ -8,7 +8,7 @@
 $ npm install --save ccc
 ```
 
-```js
+```sh
 $ component install andrepolischuk/ccc
 ```
 
