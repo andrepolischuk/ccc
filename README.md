@@ -2,14 +2,14 @@
 
   > Color conversions and transformations
 
-## Instalation
+## Install
 
 ```sh
-$ npm install --save ccc
+npm install --save ccc
 ```
 
 ```sh
-$ component install andrepolischuk/ccc
+component install andrepolischuk/ccc
 ```
 
 ## API

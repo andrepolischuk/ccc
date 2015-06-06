@@ -1,7 +1,7 @@
 
 'use strict';
 
-var ccc = require('..');
+var ccc = require('./');
 var assert = require('assert');
 
 describe('ccc(name)', function() {
